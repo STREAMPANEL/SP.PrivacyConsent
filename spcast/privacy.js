@@ -1,3 +1,6 @@
+// Declare variables for language-specific constants
+var pureprivacyTitle, pureprivacyDesc, pureprivacyButtonOk, pureprivacyButtonSettings, pureprivacyURL;
+
 // Function to detect the user's language
 function getLanguage() {
   const userLang = navigator.language || navigator.userLanguage;
@@ -9,20 +12,20 @@ function setLanguageConstants(language) {
   switch (language) {
     case "de": // German language
       // Set constants for German language
-      var pureprivacyTitle = "Cookies und SPCast";
-      var pureprivacyDesc = "Wenn Sie diese Webseite benutzen, stimmen Sie der Verarbeitung von Cookies zu.";
-      var pureprivacyButtonOk = "Verstanden, alle aktivieren";
-      var pureprivacyButtonSettings = "Cookie-Einstellungen";
-      var pureprivacyURL = "https://www.spcast.eu/kontakt/cookies/";
+      pureprivacyTitle = "Cookies und SPCast.eu";
+      pureprivacyDesc = "Wenn Sie diese Webseite benutzen, stimmen Sie der Verarbeitung von Cookies zu.";
+      pureprivacyButtonOk = "Verstanden, alle aktivieren";
+      pureprivacyButtonSettings = "Cookie-Einstellungen";
+      pureprivacyURL = "https://www.spcast.eu/kontakt/cookies/";
       break;
     default:
       // Default to English language
       // Set constants for English language
-      var pureprivacyTitle = "Cookies and SPCast";
-      var pureprivacyDesc = "By using this website, you consent to the processing of cookies.";
-      var pureprivacyButtonOk = "Understood, enable all";
-      var pureprivacyButtonSettings = "Cookie settings";
-      var pureprivacyURL = "https://www.spcast.eu/en/contact/cookies/";
+      pureprivacyTitle = "Cookies and SPCast.eu";
+      pureprivacyDesc = "By using this website, you consent to the processing of cookies.";
+      pureprivacyButtonOk = "Understood, enable all";
+      pureprivacyButtonSettings = "Cookie settings";
+      pureprivacyURL = "https://www.spcast.eu/en/contact/cookies/";
       break;
   }
 }
@@ -83,11 +86,6 @@ function getCookie(name) {
     if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
   }
   return null;
-}
-
-// Function to erase a cookie
-function eraseCookie(name) {
-  document.cookie = name + "=; Max-Age=-99999999;";
 }
 
 // Function to display the privacy consent banner
