@@ -1,5 +1,9 @@
 // Declare variables for language-specific constants
-var pureprivacyTitle, pureprivacyDesc, pureprivacyButtonOk, pureprivacyButtonSettings, pureprivacyURL;
+var pureprivacyTitle,
+  pureprivacyDesc,
+  pureprivacyButtonOk,
+  pureprivacyButtonSettings,
+  pureprivacyURL;
 
 // Function to detect the user's language
 function getLanguage() {
@@ -13,7 +17,8 @@ function setLanguageConstants(language) {
     case "de": // German language
       // Set constants for German language
       pureprivacyTitle = "Cookies und SPRadio.eu";
-      pureprivacyDesc = "Wenn Sie diese Webseite benutzen, stimmen Sie der Verarbeitung von Cookies zu.";
+      pureprivacyDesc =
+        "Wenn Sie diese Webseite benutzen, stimmen Sie der Verarbeitung von Cookies zu.";
       pureprivacyButtonOk = "Verstanden, alle aktivieren";
       pureprivacyButtonSettings = "Cookie-Einstellungen";
       pureprivacyURL = "https://www.spradio.eu/kontakt/cookies/";
@@ -22,7 +27,8 @@ function setLanguageConstants(language) {
       // Default to English language
       // Set constants for English language
       pureprivacyTitle = "Cookies and SPRadio.eu";
-      pureprivacyDesc = "By using this website, you consent to the processing of cookies.";
+      pureprivacyDesc =
+        "By using this website, you consent to the processing of cookies.";
       pureprivacyButtonOk = "Understood, enable all";
       pureprivacyButtonSettings = "Cookie settings";
       pureprivacyURL = "https://www.spradio.eu/en/contact/cookies/";
@@ -73,7 +79,8 @@ function setCookie(name, value, days) {
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     expires = "; expires=" + date.toUTCString();
   }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/; domain=.spradio.eu";
+  document.cookie =
+    name + "=" + (value || "") + expires + "; path=/; domain=.spradio.eu";
 }
 
 // Function to get a cookie
