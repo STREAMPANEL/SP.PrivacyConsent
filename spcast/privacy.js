@@ -1,21 +1,20 @@
-// Declare variables for language-specific constants
-var pureprivacyTitle,
+// Define language-specific constants
+let pureprivacyTitle,
   pureprivacyDesc,
   pureprivacyButtonOk,
   pureprivacyButtonSettings,
   pureprivacyURL;
 
-// Function to detect the user's language
-function getLanguage() {
+// Detect the user's language
+const getLanguage = () => {
   const userLang = navigator.language || navigator.userLanguage;
-  return userLang.split("-")[0]; // Extract the language code (e.g., "en" from "en-US")
-}
+  return userLang.split("-")[0]; // Extract language code (e.g., "en" from "en-US")
+};
 
-// Function to set the language-specific constants
-function setLanguageConstants(language) {
+// Set language-specific constants
+const setLanguageConstants = (language) => {
   switch (language) {
-    case "de": // German language
-      // Set constants for German language
+    case "de": // German
       pureprivacyTitle = "Cookies und SPCast.eu";
       pureprivacyDesc =
         "Wenn Sie diese Webseite benutzen, stimmen Sie der Verarbeitung von Cookies zu.";
@@ -23,9 +22,7 @@ function setLanguageConstants(language) {
       pureprivacyButtonSettings = "Cookie-Einstellungen";
       pureprivacyURL = "https://www.spcast.eu/kontakt/cookies/";
       break;
-    default:
-      // Default to English language
-      // Set constants for English language
+    default: // Default to English
       pureprivacyTitle = "Cookies and SPCast.eu";
       pureprivacyDesc =
         "By using this website, you consent to the processing of cookies.";
@@ -34,93 +31,85 @@ function setLanguageConstants(language) {
       pureprivacyURL = "https://www.spcast.eu/en/contact/cookies/";
       break;
   }
-}
+};
 
-// Get user language
-const userLanguage = getLanguage();
+// Apply user's language to set constants
+setLanguageConstants(getLanguage());
 
-// Set language-specific constants
-setLanguageConstants(userLanguage);
-
-// Function to fade in an element
-function pureFadeIn(elem, display) {
-  var el = document.getElementById(elem);
+// Fade in an element
+const pureFadeIn = (elem, display) => {
+  const el = document.getElementById(elem);
   el.style.opacity = 0;
   el.style.display = display || "block";
 
-  (function fade() {
-    var val = parseFloat(el.style.opacity);
+  const fade = () => {
+    let val = parseFloat(el.style.opacity);
     if (!((val += 0.02) > 1)) {
       el.style.opacity = val;
       requestAnimationFrame(fade);
     }
-  })();
-}
+  };
+  fade();
+};
 
-// Function to fade out an element
-function pureFadeOut(elem) {
-  var el = document.getElementById(elem);
+// Fade out an element
+const pureFadeOut = (elem) => {
+  const el = document.getElementById(elem);
   el.style.opacity = 1;
 
-  (function fade() {
+  const fade = () => {
     if ((el.style.opacity -= 0.02) < 0) {
       el.style.display = "none";
     } else {
       requestAnimationFrame(fade);
     }
-  })();
-}
+  };
+  fade();
+};
 
-// Function to set a cookie
-function setCookie(name, value, days) {
-  var expires = "";
+// Set a cookie
+const setCookie = (name, value, days) => {
+  let expires = "";
   if (days) {
-    var date = new Date();
+    const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     expires = "; expires=" + date.toUTCString();
   }
-  document.cookie =
-    name + "=" + (value || "") + expires + "; path=/; domain=.spcast.eu";
-}
+  document.cookie = `${name}=${
+    value || ""
+  }${expires}; path=/; domain=.spcast.eu`;
+};
 
-// Function to get a cookie
-function getCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(";");
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
+// Get a cookie
+const getCookie = (name) => {
+  const nameEQ = `${name}=`;
+  const ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
     while (c.charAt(0) === " ") c = c.substring(1, c.length);
     if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
   }
   return null;
-}
+};
 
-// Function to display the privacy consent banner
-function privacyConsent() {
+// Display the privacy consent banner
+const privacyConsent = () => {
   if (!getCookie("cookie_consent_level")) {
-    document.body.innerHTML +=
-      '<div class="privacyConsentContainer" id="privacyConsentContainer"><div class="privacyTitle"><a>' +
-      pureprivacyTitle +
-      '</a></div><div class="privacyDesc"><p>' +
-      pureprivacyDesc +
-      '</p></div><div class="privacyButton"><a onClick="cookie_consent_level();">' +
-      pureprivacyButtonOk +
-      '</a></div><div class="privacyButton"><a href="' +
-      pureprivacyURL +
-      '">' +
-      pureprivacyButtonSettings +
-      "</a></div></div>";
+    // Append consent banner HTML to the body without overwriting existing content
+    const consentBannerHTML = `<div class="privacyConsentContainer" id="privacyConsentContainer"><div class="privacyTitle"><a>${pureprivacyTitle}</a></div><div class="privacyDesc"><p>${pureprivacyDesc}</p></div><div class="privacyButton"><a onclick="cookie_consent_level();">${pureprivacyButtonOk}</a></div><div class="privacyButton"><a href="${pureprivacyURL}">${pureprivacyButtonSettings}</a></div></div>`;
+    document.body.insertAdjacentHTML("beforeend", consentBannerHTML);
     pureFadeIn("privacyConsentContainer");
   }
-}
+};
 
-// Function to handle the cookie consent level
-function cookie_consent_level() {
+// Handle cookie consent level setting
+const cookie_consent_level = () => {
   setCookie("cookie_consent_level", "targeting", 90);
   pureFadeOut("privacyConsentContainer");
-}
+  // Reload the page or re-initialize page components as needed
+};
 
-// Execute the privacyConsent function when the window has finished loading
-window.onload = function () {
+// Initialize privacy consent process when the window has finished loading
+window.onload = () => {
   privacyConsent();
 };
