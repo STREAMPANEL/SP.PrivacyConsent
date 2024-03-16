@@ -77,7 +77,7 @@ const setCookie = (name, value, days) => {
   }
   document.cookie = `${name}=${
     value || ""
-  }${expires}; path=/; domain=.spcast.eu`;
+  }${expires}; path=/; domain=.spradio.eu`;
 };
 
 // Get a cookie
