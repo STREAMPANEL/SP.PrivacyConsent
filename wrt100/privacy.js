@@ -14,14 +14,14 @@ const translations = {
     desc: "Wenn Sie diese Webseite benutzen, stimmen Sie der Verarbeitung von Cookies zu.",
     buttonOk: "Verstanden, alle aktivieren",
     buttonSettings: "Cookie-Einstellungen",
-    url: "https://www.webradiotop100.de/cookies/",
+    url: "https://www.webradiotop100.de/cookies.php",
   },
   en: {
     title: "Cookies and WebradioTop100.de",
     desc: "By using this website, you consent to the processing of cookies.",
     buttonOk: "Understood, enable all",
     buttonSettings: "Cookie settings",
-    url: "https://www.webradiotop100.de/cookies/",
+    url: "https://www.webradiotop100.de/cookies.php",
   },
 };
 
@@ -118,4 +118,4 @@ const setCookieConsent = () => {
 };
 
 // Initialize privacy consent when DOM is ready
-document.addEvent;
+document.addEventListener("DOMContentLoaded", privacyConsent);
