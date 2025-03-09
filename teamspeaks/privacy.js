@@ -20,7 +20,7 @@ const setLanguageConstants = (language) => {
         "Wenn Sie diese Webseite benutzen, stimmen Sie der Verarbeitung von Cookies zu.";
       pureprivacyButtonOk = "Verstanden, alle aktivieren";
       pureprivacyButtonSettings = "Cookie-Einstellungen";
-      pureprivacyURL = "https://www.teamspeaks.eu/kontakt/cookies/";
+      pureprivacyURL = "https://www.teamspeaks.eu/cookies.php";
       break;
     default: // Default to English
       pureprivacyTitle = "Cookies and Teamspeaks.eu";
@@ -28,7 +28,7 @@ const setLanguageConstants = (language) => {
         "By using this website, you consent to the processing of cookies.";
       pureprivacyButtonOk = "Understood, enable all";
       pureprivacyButtonSettings = "Cookie settings";
-      pureprivacyURL = "https://www.teamspeaks.eu/en/contact/cookies/";
+      pureprivacyURL = "https://www.teamspeaks.eu/en/cookies.php";
       break;
   }
 };
@@ -96,7 +96,7 @@ const getCookie = (name) => {
 const privacyConsent = () => {
   if (!getCookie("cookie_consent_level")) {
     // Append consent banner HTML to the body without overwriting existing content
-    const consentBannerHTML = `<div class="privacyConsentContainer" id="privacyConsentContainer"><div class="privacyTitle"><a>${pureprivacyTitle}</a></div><div class="privacyDesc"><p>${pureprivacyDesc}</p></div><div class="privacyButton"><a onclick="cookie_consent_level();">${pureprivacyButtonOk}</a></div><div class="privacyButton"><a href="${pureprivacyURL}">${pureprivacyButtonSettings}</a></div></div>`;
+    const consentBannerHTML = `<div class="privacyConsentContainer" id="privacyConsentContainer"><div class="privacyTitle" target="_blank" rel="noopener"><a>${pureprivacyTitle}</a></div><div class="privacyDesc"><p>${pureprivacyDesc}</p></div><div class="privacyButton"><a onclick="cookie_consent_level();">${pureprivacyButtonOk}</a></div><div class="privacyButton"><a href="${pureprivacyURL}">${pureprivacyButtonSettings}</a></div></div>`;
     document.body.insertAdjacentHTML("beforeend", consentBannerHTML);
     pureFadeIn("privacyConsentContainer");
   }
@@ -110,6 +110,6 @@ const cookie_consent_level = () => {
 };
 
 // Initialize privacy consent process when the window has finished loading
-window.onload = () => {
+document.addEventListener("DOMContentLoaded", function () {
   privacyConsent();
-};
+});
