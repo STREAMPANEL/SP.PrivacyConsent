@@ -1,0 +1,14 @@
+# BEGIN Cache-Control for CSS & JS (4 Hours)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 4 hours"
+  ExpiresByType text/javascript "access plus 4 hours"
+  ExpiresByType application/javascript "access plus 4 hours"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "max-age=14400, public"
+  </FilesMatch>
+</IfModule>
+# END Cache-Control for CSS & JS
