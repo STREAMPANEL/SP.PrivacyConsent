@@ -1,9 +1,5 @@
 // Define language-specific constants
-let pureprivacyTitle,
-  pureprivacyDesc,
-  pureprivacyButtonOk,
-  pureprivacyButtonSettings,
-  pureprivacyURL;
+let pureprivacyTitle, pureprivacyDesc, pureprivacyButtonOk, pureprivacyButtonSettings, pureprivacyURL;
 
 // Detect the user's language
 const getLanguage = () => {
@@ -16,8 +12,7 @@ const setLanguageConstants = (language) => {
   switch (language) {
     case "de": // German
       pureprivacyTitle = "Cookies und STREAMPANEL";
-      pureprivacyDesc =
-        "Wenn Sie diese Webseite benutzen, stimmen Sie der Verarbeitung von Cookies zu.";
+      pureprivacyDesc = "Wenn Sie diese Webseite benutzen, stimmen Sie der Verarbeitung von Cookies zu.";
       pureprivacyButtonOk = "Verstanden, alle aktivieren";
       pureprivacyButtonSettings = "Cookie-Einstellungen";
       pureprivacyURL = "https://www.streampanel.net/kontakt/cookies/";
@@ -26,8 +21,7 @@ const setLanguageConstants = (language) => {
       // Default to English language
       // Set constants for English language
       pureprivacyTitle = "Cookies and STREAMPANEL";
-      pureprivacyDesc =
-        "By using this website, you consent to the processing of cookies.";
+      pureprivacyDesc = "By using this website, you consent to the processing of cookies.";
       pureprivacyButtonOk = "Understood, enable all";
       pureprivacyButtonSettings = "Cookie settings";
       pureprivacyURL = "https://www.streampanel.net/en/contact/cookies/";
@@ -77,9 +71,7 @@ const setCookie = (name, value, days) => {
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     expires = "; expires=" + date.toUTCString();
   }
-  document.cookie = `${name}=${
-    value || ""
-  }${expires}; path=/; domain=.streampanel.net`;
+  document.cookie = `${name}=${value || ""}${expires}; path=/; domain=.streampanel.net`;
 };
 
 // Get a cookie
@@ -98,7 +90,7 @@ const getCookie = (name) => {
 const privacyConsent = () => {
   if (!getCookie("cookie_consent_level")) {
     // Append consent banner HTML to the body without overwriting existing content
-    const consentBannerHTML = `<div class="privacyConsentContainer" id="privacyConsentContainer"><div class="privacyTitle" target="_blank" rel="noopener"><a>${pureprivacyTitle}</a></div><div class="privacyDesc"><p>${pureprivacyDesc}</p></div><div class="privacyButton"><a onclick="cookie_consent_level();">${pureprivacyButtonOk}</a></div><div class="privacyButton"><a href="${pureprivacyURL}">${pureprivacyButtonSettings}</a></div></div>`;
+    const consentBannerHTML = `<div class="privacyConsentContainer" id="privacyConsentContainer"><div class="privacyTitle"><a>${pureprivacyTitle}</a></div><div class="privacyDesc"><p>${pureprivacyDesc}</p></div><div class="privacyButton"><a onclick="cookie_consent_level();">${pureprivacyButtonOk}</a></div><div class="privacyButton"><a href="${pureprivacyURL}">${pureprivacyButtonSettings}</a></div></div>`;
     document.body.insertAdjacentHTML("beforeend", consentBannerHTML);
     pureFadeIn("privacyConsentContainer");
   }
@@ -112,6 +104,12 @@ const cookie_consent_level = () => {
 };
 
 // Initialize privacy consent process when the window has finished loading
-document.addEventListener("DOMContentLoaded", function () {
+if (document.readyState === "complete") {
+  // Page already loaded
   privacyConsent();
-});
+} else {
+  // Add Load Event
+  window.addEventListener("load", function () {
+    privacyConsent();
+  });
+}
