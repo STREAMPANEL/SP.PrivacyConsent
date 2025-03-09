@@ -12,7 +12,7 @@
   display: none;
 }
 
-.privacyConsentContainer .privacyTitle a {
+.privacyConsentContainer .privacyTitle {
   font-family: inherit;
   color: #ffffff;
   font-size: 22px;
