@@ -61,32 +61,33 @@ const pureFadeOut = (elem) => {
   fade();
 };
 
-// Set a cookie
-const setCookie = (name, value, days) => {
-  let expires = "";
-  if (days) {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = `${name}=${value || ""}${expires}; path=/; domain=.shoutcast-tools.com`;
-};
+// Cookie Helper to avoid global conflicts
+const cookieHelper = {
+  setCookie: (name, value, days) => {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = `${name}=${value || ""}${expires}; path=/; domain=.shoutcast-tools.com`;
+  },
 
-// Get a cookie
-const getCookie = (name) => {
-  const nameEQ = `${name}=`;
-  const ca = document.cookie.split(";");
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) === " ") c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
+  getCookie: (name) => {
+    const nameEQ = `${name}=`;
+    const ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  },
 };
 
 // Display the privacy consent banner
 const privacyConsent = () => {
-  if (!getCookie("cookie_consent_level")) {
+  if (!cookieHelper.getCookie("cookie_consent_level")) {
     // Append consent banner HTML to the body without overwriting existing content
     const consentBannerHTML = `<div class="privacyConsentContainer" id="privacyConsentContainer"><div class="privacyTitle">${pureprivacyTitle}</div><div class="privacyDesc"><p>${pureprivacyDesc}</p></div><div class="privacyButton"><a onclick="cookie_consent_level();">${pureprivacyButtonOk}</a></div><div class="privacyButton"><a href="${pureprivacyURL}" target="_blank" rel="noopener">${pureprivacyButtonSettings}</a></div></div>`;
     document.body.insertAdjacentHTML("beforeend", consentBannerHTML);
@@ -96,7 +97,7 @@ const privacyConsent = () => {
 
 // Handle cookie consent level setting
 const cookie_consent_level = () => {
-  setCookie("cookie_consent_level", "targeting", 90);
+  cookieHelper.setCookie("cookie_consent_level", "targeting", 90);
   pureFadeOut("privacyConsentContainer");
   // Reload the page or re-initialize page components as needed
 };
