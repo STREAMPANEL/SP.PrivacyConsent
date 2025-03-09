@@ -88,7 +88,7 @@ const getCookie = (name) => {
 const privacyConsent = () => {
   if (!getCookie("cookie_consent_level")) {
     // Append consent banner HTML to the body without overwriting existing content
-    const consentBannerHTML = `<div class="privacyConsentContainer" id="privacyConsentContainer"><div class="privacyTitle"><a>${pureprivacyTitle}</a></div><div class="privacyDesc"><p>${pureprivacyDesc}</p></div><div class="privacyButton"><a onclick="cookie_consent_level();">${pureprivacyButtonOk}</a></div><div class="privacyButton"><a href="${pureprivacyURL}">${pureprivacyButtonSettings}</a></div></div>`;
+    const consentBannerHTML = `<div class="privacyConsentContainer" id="privacyConsentContainer"><div class="privacyTitle"><a>${pureprivacyTitle}</a></div><div class="privacyDesc"><p>${pureprivacyDesc}</p></div><div class="privacyButton"><a onclick="cookie_consent_level();">${pureprivacyButtonOk}</a></div><div class="privacyButton"><a href="${pureprivacyURL}" target="_blank" rel="noopener">${pureprivacyButtonSettings}</a></div></div>`;
     document.body.insertAdjacentHTML("beforeend", consentBannerHTML);
     pureFadeIn("privacyConsentContainer");
   }
@@ -111,3 +111,4 @@ if (document.readyState === "complete") {
     privacyConsent();
   });
 }
+
